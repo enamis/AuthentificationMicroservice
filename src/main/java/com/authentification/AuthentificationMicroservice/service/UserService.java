@@ -23,7 +23,8 @@ public class UserService {
 
 
     public String checkCredentials(String userName, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        if(userDao.existsById(userName) && validatePassword(password,userDao.findByUserName(userName).getUserPassword())){
+        boolean isValidatePassword=validatePassword(password,userDao.findByUserName(userName).getUserPassword());
+        if(userDao.existsById(userName) && isValidatePassword){
            log.info("stored pass "+userDao.findByUserName(userName).getUserPassword() );
             return "Successfully loggedIn";
         }
@@ -72,15 +73,6 @@ public class UserService {
         }
         return bytes;
     }
-
-
-    public String passwordEncry(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
-        String generatedSecuredPasswordHash = generateStrongPasswordHash(password);
-        //return generatedSecuredPasswordHash;
-        return generatedSecuredPasswordHash;
-    }
-
 
 
 
